@@ -13,6 +13,17 @@ export default function FanDashboardCard({
     celeb.thumbnail || celeb.image || '/default-avatar.png'
   );
 
+  // Helper to create safe social links
+  const formatLink = (platform: 'instagram' | 'youtube' | 'imdb', value: string) => {
+    if (value.startsWith('http')) return value;
+
+    const handle = value.replace(/^@/, '').trim(); // Remove @ if present
+    if (platform === 'instagram') return `https://www.instagram.com/${handle}`;
+    if (platform === 'youtube') return `https://www.youtube.com/${handle}`;
+    if (platform === 'imdb') return `https://www.imdb.com/${handle}`;
+    return '#';
+  };
+
   return (
     <div className="bg-white text-black rounded-lg shadow p-6 flex flex-col items-center space-y-3">
       <img
@@ -37,7 +48,7 @@ export default function FanDashboardCard({
       <div className="flex flex-col gap-2 mt-2 text-center">
         {celeb.instagram && (
           <a
-            href={celeb.instagram.startsWith('http') ? celeb.instagram : `https://${celeb.instagram}`}
+            href={formatLink('instagram', celeb.instagram)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 underline hover:text-blue-800"
@@ -47,12 +58,22 @@ export default function FanDashboardCard({
         )}
         {celeb.youtube && (
           <a
-            href={celeb.youtube.startsWith('http') ? celeb.youtube : `https://${celeb.youtube}`}
+            href={formatLink('youtube', celeb.youtube)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-red-600 underline hover:text-red-800"
           >
             Visit YouTube Channel
+          </a>
+        )}
+        {celeb.imdb && (
+          <a
+            href={formatLink('imdb', celeb.imdb)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yellow-600 underline hover:text-yellow-800"
+          >
+            View IMDb Profile
           </a>
         )}
       </div>
