@@ -12,6 +12,8 @@ type Celebrity = {
   fanbase?: string;
   country: string;
   thumbnail?: string;
+  instagram?: string;
+  youtube?: string;
 };
 
 export default function FanDashboard() {
@@ -29,7 +31,7 @@ export default function FanDashboard() {
     setRole(r);
     setTokenChecked(true);
 
-    // Redirect once values are available
+    // Only redirect after checking
     if (!t) router.replace('/auth/login');
     else if (r !== 'fan') router.replace(r === 'celebrity' ? '/celeb-dashboard' : '/auth/login');
   }, [router]);
@@ -63,9 +65,19 @@ export default function FanDashboard() {
 
   return (
     <main className="min-h-screen bg-black text-white p-8">
-      <nav className="mb-6 flex gap-4">
-        <Link href="/auth/login" className="underline text-blue-400">Login</Link>
-        <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
+      <nav className="mb-6 flex gap-6 justify-end">
+        {!token && (
+          <>
+            <Link href="/auth/login" className="underline text-blue-400">Login</Link>
+            <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
+          </>
+        )}
+        {token && (
+          <>
+            <Link href="/fan-dashboard" className="text-yellow-400">Dashboard</Link>
+            <Link href="/celebrity/celebrity-signup" className="text-yellow-400">+ Add Celebrity</Link>
+          </>
+        )}
       </nav>
 
       {following.length > 0 && (
@@ -81,7 +93,7 @@ export default function FanDashboard() {
       )}
 
       {loading ? (
-        <div>Loading...</div>
+        <div className="text-center text-lg">Loading...</div>
       ) : following.length === 0 ? (
         <div className="flex flex-col items-center">
           <h1 className="text-2xl font-bold mb-4">My Followed Celebrities</h1>
