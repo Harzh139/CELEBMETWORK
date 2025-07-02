@@ -42,7 +42,7 @@ export default function CelebrityOnboardForm({
     setLoading(true);
     try {
       // 1. Create the celebrity
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

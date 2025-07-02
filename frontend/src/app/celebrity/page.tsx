@@ -17,7 +17,7 @@ export default function CelebrityGrid() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
       .then((res) => res.json())
       .then((data) => setCelebrities(data))
       .finally(() => setLoading(false));

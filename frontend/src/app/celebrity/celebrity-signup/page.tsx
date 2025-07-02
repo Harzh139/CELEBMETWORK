@@ -50,7 +50,7 @@ export default function CelebritySignup() {
     setSuggestions([]);
     try {
       const prompt = `Suggest 5 celebrities based on this intro: "${intro}". For each, return a JSON object with "name", "genre", "country", "fanbase" (describe the typical fans, e.g. "Punjabi music lovers"), "imageUrl", "instagram", "youtube", and "imdb". Example: [{"name": "...", "genre": "...", "country": "...", "fanbase": "...", "imageUrl": "...", "instagram": "...", "youtube": "...", "imdb": "..."}]`;
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities/search`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
@@ -87,7 +87,7 @@ export default function CelebritySignup() {
     try {
       const payload = { ...form };
       // 1. Create the celebrity
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -99,7 +99,7 @@ export default function CelebritySignup() {
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role');
       if (token && role === 'fan' && created.id) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/follow`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,

@@ -32,7 +32,7 @@ export default function FanDashboard() {
   useEffect(() => {
     if (!token) return;
     setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/me/following`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/me/following`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -42,7 +42,7 @@ export default function FanDashboard() {
 
   const unfollow = async (id: number) => {
     if (!token) return;
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/unfollow`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/unfollow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

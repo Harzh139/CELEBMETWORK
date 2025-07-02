@@ -27,7 +27,7 @@ export default function CelebDashboard() {
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
       .then(res => res.json())
       .then(setStats)
       .finally(() => setLoading(false));
@@ -60,12 +60,6 @@ export default function CelebDashboard() {
       ) : (
         <div>No stats found.</div>
       )}
-      <img
-        src={stats?.thumbnail || '/default-avatar.png'}
-        alt="Celebrity Thumbnail"
-        className="w-32 h-32 object-cover rounded-full mb-4 border"
-        onError={e => { e.currentTarget.src = '/default-avatar.png'; }}
-      />
     </main>
   );
 }

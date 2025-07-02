@@ -13,7 +13,7 @@ export default function SignupPage() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

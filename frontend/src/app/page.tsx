@@ -24,7 +24,7 @@ export default function Home() {
   // Fetch all celebrities
   const fetchCelebs = () => {
     setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
       .then(res => res.json())
       .then(data => setCelebrities(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
@@ -35,7 +35,7 @@ export default function Home() {
   }, []);
 
   const handleSuggest = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities/search`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities/search`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt }),
