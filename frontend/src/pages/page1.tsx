@@ -14,7 +14,7 @@ export default function Home() {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/celebrities`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
       .then(res => res.json())
       .then(setCelebrities);
   }, []);
