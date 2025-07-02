@@ -1,68 +1,84 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // ✅ Use this, not 'next/router'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem('token'));
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError('');
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(form),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
+      if (!res.ok) throw new Error(data.message || 'Login failed');
 
       localStorage.setItem('token', data.access_token);
       router.push('/fan-dashboard');
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || 'Login failed');
     }
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-purple-900 text-white px-4">
-      <h1 className="text-3xl font-bold mb-6">Login</h1>
-      <form onSubmit={handleLogin} className="flex flex-col gap-4 w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-xl">
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+      <form onSubmit={handleLogin} className="bg-gray-900 p-8 rounded shadow space-y-4 w-full max-w-sm">
+        <h1 className="text-2xl font-bold mb-4">Log In</h1>
 
         <input
-          type="email"
+          className="w-full p-2 rounded bg-gray-800 text-white"
           placeholder="Email"
-          className="p-3 rounded-md bg-gray-700 text-white focus:outline-none"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          value={form.email}
+          onChange={e => setForm({ ...form, email: e.target.value })}
           required
         />
 
         <input
-          type="password"
+          className="w-full p-2 rounded bg-gray-800 text-white"
           placeholder="Password"
-          className="p-3 rounded-md bg-gray-700 text-white focus:outline-none"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          value={form.password}
+          onChange={e => setForm({ ...form, password: e.target.value })}
           required
         />
 
-        <button
-          type="submit"
-          className="bg-gradient-to-r from-yellow-400 to-purple-500 text-black font-bold px-4 py-2 rounded-full hover:scale-105 transition-transform"
-        >
-          Login
+        <button type="submit" className="bg-yellow-400 text-black px-4 py-2 rounded w-full">
+          Log In
         </button>
+
+        {error && <div className="text-red-400">{error}</div>}
+
+        <div className="text-center mt-4">
+          <Link href="/auth/signup" className="underline text-blue-400">
+            Don't have an account? Sign Up
+          </Link>
+        </div>
       </form>
+
+      <nav className="mt-4">
+        {!loggedIn && (
+          <>
+            <Link href="/auth/login" className="underline text-blue-400 mr-4">Login</Link>
+            <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
+          </>
+        )}
+      </nav>
     </main>
   );
 }
