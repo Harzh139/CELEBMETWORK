@@ -37,7 +37,7 @@ export default function FanDashboardCard({
       <div className="flex flex-col gap-2 mt-2 text-center">
         {celeb.instagram && (
           <a
-            href={celeb.instagram}
+            href={celeb.instagram.startsWith('http') ? celeb.instagram : `https://${celeb.instagram}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 underline hover:text-blue-800"
@@ -47,7 +47,7 @@ export default function FanDashboardCard({
         )}
         {celeb.youtube && (
           <a
-            href={celeb.youtube}
+            href={celeb.youtube.startsWith('http') ? celeb.youtube : `https://${celeb.youtube}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-red-600 underline hover:text-red-800"
