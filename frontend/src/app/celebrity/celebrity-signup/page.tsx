@@ -227,6 +227,41 @@ export default function CelebritySignup() {
           Celebrity profile created!
         </div>
       )}
+
+      <div className="mt-8">
+        <h2 className="text-lg font-semibold mb-2">Preview</h2>
+        <div className="flex items-center">
+          <img
+            src={form.thumbnail || '/default-avatar.png'}
+            alt={form.name}
+            className="w-32 h-32 object-cover rounded-full mb-4 border"
+            onError={e => { e.currentTarget.src = '/default-avatar.png'; }}
+          />
+          <div className="ml-4">
+            <p className="text-xl font-bold">{form.name}</p>
+            <p className="text-gray-400">{form.genre} · {form.country}</p>
+            <p className="mt-2">{form.description}</p>
+            <p className="mt-2 text-sm text-gray-500">{form.fanbase}</p>
+            <div className="flex gap-2 mt-2">
+              {form.instagram && (
+                <a href={form.instagram} target="_blank" rel="noopener noreferrer">
+                  <img src="/instagram-icon.png" alt="Instagram" className="w-6 h-6" />
+                </a>
+              )}
+              {form.youtube && (
+                <a href={form.youtube} target="_blank" rel="noopener noreferrer">
+                  <img src="/youtube-icon.png" alt="YouTube" className="w-6 h-6" />
+                </a>
+              )}
+              {form.imdb && (
+                <a href={form.imdb} target="_blank" rel="noopener noreferrer">
+                  <img src="/imdb-icon.png" alt="IMDB" className="w-6 h-6" />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

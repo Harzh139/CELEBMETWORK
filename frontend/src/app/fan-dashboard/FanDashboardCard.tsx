@@ -11,13 +11,11 @@ export default function FanDashboardCard({ celeb, onUnfollow }: { celeb: any, on
   return (
     <div className="bg-white text-black rounded-lg shadow p-4 flex flex-col items-center">
       <div className="w-32 h-32 mb-4 relative">
-        <Image
-          src={imgSrc}
+        <img
+          src={celeb.thumbnail || '/default-avatar.png'}
           alt={celeb.name}
-          width={150}
-          height={150}
-          className="rounded-full object-cover w-32 h-32"
-          onError={() => setImgSrc('/default-avatar.png')}
+          className="w-32 h-32 object-cover rounded-full mb-4 border"
+          onError={e => { e.currentTarget.src = '/default-avatar.png'; }}
         />
       </div>
       <h2 className="text-xl font-semibold mb-2">{celeb.name}</h2>

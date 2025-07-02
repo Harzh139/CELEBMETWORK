@@ -86,9 +86,10 @@ export default function CelebrityProfilePage() {
   return (
     <main className="min-h-screen bg-black text-white p-8 flex flex-col items-center">
       <img
-        src={celeb.thumbnail || '/default.jpg'}
+        src={celeb.thumbnail || '/default-avatar.png'}
         alt={celeb.name}
         className="w-32 h-32 object-cover rounded-full mb-4 border"
+        onError={e => { e.currentTarget.src = '/default-avatar.png'; }}
       />
       <h1 className="text-3xl font-bold mb-2">{celeb.name}</h1>
       <p className="mb-1"><span className="font-semibold">Category:</span> {celeb.genre}</p>
