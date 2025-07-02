@@ -26,8 +26,14 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
+      // ✅ Save token and role
       localStorage.setItem('token', data.access_token);
-      router.push('/fan-dashboard');
+      localStorage.setItem('role', data.role || 'fan'); // optional
+
+      // ✅ Delay to ensure token is stored before redirect
+      setTimeout(() => {
+        router.push('/fan-dashboard');
+      }, 100);
     } catch (err: any) {
       setError(err.message);
     }
