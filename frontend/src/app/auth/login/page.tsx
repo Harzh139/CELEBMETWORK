@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem('token'));
@@ -17,6 +17,7 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/auth/login`, {
         method: 'POST',
@@ -25,7 +26,6 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
       localStorage.setItem('token', data.access_token);
@@ -71,14 +71,12 @@ export default function LoginPage() {
         </div>
       </form>
 
-      <nav className="mt-4">
-        {!loggedIn && (
-          <>
-            <Link href="/auth/login" className="underline text-blue-400 mr-4">Login</Link>
-            <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
-          </>
-        )}
-      </nav>
+      {!loggedIn && (
+        <nav className="mt-4 flex gap-4">
+          <Link href="/auth/login" className="underline text-blue-400">Login</Link>
+          <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
+        </nav>
+      )}
     </main>
   );
 }
