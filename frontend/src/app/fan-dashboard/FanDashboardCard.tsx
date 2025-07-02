@@ -24,15 +24,12 @@ export default function FanDashboardCard({ celeb, onUnfollow }: { celeb: any, on
       <div className="flex gap-4 mt-2">
         {celeb.instagram && (
           <a href={celeb.instagram} target="_blank" rel="noopener noreferrer">
-            {(FaInstagram as any)({ className: "text-pink-500 text-2xl" })}
-
-
+            <FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition-transform" />
           </a>
         )}
         {celeb.youtube && (
           <a href={celeb.youtube} target="_blank" rel="noopener noreferrer">
-            {(FaYoutube as any)({ className: "text-red-600 text-2xl hover:scale-110 transition-transform" })}
-
+            <FaYoutube className="text-red-600 text-2xl hover:scale-110 transition-transform" />
           </a>
         )}
       </div>
