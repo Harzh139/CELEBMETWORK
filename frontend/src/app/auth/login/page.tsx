@@ -11,7 +11,9 @@ export default function LoginPage() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    setLoggedIn(!!localStorage.getItem('token'));
+    if (typeof window !== 'undefined') {
+      setLoggedIn(!!localStorage.getItem('token'));
+    }
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -70,13 +72,6 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
-
-      {!loggedIn && (
-        <nav className="mt-4 flex gap-4">
-          <Link href="/auth/login" className="underline text-blue-400">Login</Link>
-          <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
-        </nav>
-      )}
     </main>
   );
 }
