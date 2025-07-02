@@ -15,12 +15,17 @@ type Celebrity = {
 export default function CelebrityGrid() {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false); // Track login state
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
       .then((res) => res.json())
       .then((data) => setCelebrities(data))
       .finally(() => setLoading(false));
+
+    // Check login status
+    const token = localStorage.getItem('token');
+    setLoggedIn(!!token);
   }, []);
 
   return (
@@ -28,7 +33,7 @@ export default function CelebrityGrid() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Celebrities</h1>
         <Link
-          href="/celebrity/celebrity-signup"
+          href={loggedIn ? '/celebrity/celebrity-signup' : '/auth/login'}
           className="bg-yellow-400 text-black px-4 py-2 rounded font-semibold hover:bg-yellow-300"
         >
           + Add a Celebrity
@@ -72,6 +77,11 @@ export default function CelebrityGrid() {
           ))}
         </div>
       )}
+      <div className="mt-8 text-center">
+        <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition">
+          Add
+        </button>
+      </div>
     </main>
   );
 }

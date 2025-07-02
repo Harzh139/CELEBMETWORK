@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Stats = {
   fans: number;
@@ -14,27 +15,37 @@ export default function CelebDashboard() {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const t = localStorage.getItem('token');
-    const r = localStorage.getItem('role');
+    const t = localStorage.getItem("token");
+    const r = localStorage.getItem("role");
     setToken(t);
     setRole(r);
-    if (!t) router.replace('/auth/login');
-    else if (r !== 'celebrity') router.replace(r === 'fan' ? '/fan-dashboard' : '/auth/login');
+    if (!t) router.replace("/auth/login");
+    else if (r !== "celebrity")
+      router.replace(r === "fan" ? "/fan-dashboard" : "/auth/login");
   }, [router]);
 
   useEffect(() => {
     if (!token) return;
     fetch(`${process.env.NEXT_PUBLIC_API_BASE}/celebrities`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setStats)
       .finally(() => setLoading(false));
   }, [token]);
 
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem("token"));
+  }, []);
+
   if (!token) {
-    return <div className="p-8 text-red-400">Please log in as a celebrity to view your dashboard.</div>;
+    return (
+      <div className="p-8 text-red-400">
+        Please log in as a celebrity to view your dashboard.
+      </div>
+    );
   }
 
   return (
@@ -60,6 +71,18 @@ export default function CelebDashboard() {
       ) : (
         <div>No stats found.</div>
       )}
+      <nav>
+        {!loggedIn && (
+          <>
+            <Link href="/auth/login">Login</Link>
+            <Link href="/auth/signup">Sign Up</Link>
+          </>
+        )}
+        {/* Other nav items */}
+      </nav>
+      <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition">
+        Add
+      </button>
     </main>
   );
 }

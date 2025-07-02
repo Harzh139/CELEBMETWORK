@@ -28,6 +28,9 @@ export default function FanDashboardCard({ celeb, onUnfollow }: { celeb: any, on
       >
         Unfollow
       </button>
+      <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition">
+        Add
+      </button>
     </div>
   );
 }

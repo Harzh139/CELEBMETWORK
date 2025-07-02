@@ -20,6 +20,12 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showOnboard, setShowOnboard] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] = useState<any>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  // Check if user is logged in
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem('token'));
+  }, []);
 
   // Fetch all celebrities
   const fetchCelebs = () => {
@@ -50,11 +56,23 @@ export default function Home() {
     if (refresh) fetchCelebs();
   };
 
+  const handleAddCelebrity = () => {
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/auth/login';
+      return;
+    }
+    // else show modal or navigate
+  };
+
   return (
     <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-black via-gray-900 to-purple-900 text-white px-4">
       <nav className="w-full flex justify-end gap-4 py-4">
-        <Link href="/auth/login" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Login</Link>
-        <Link href="/auth/signup" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Sign Up</Link>
+        {!loggedIn && (
+          <>
+            <Link href="/auth/login" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Login</Link>
+            <Link href="/auth/signup" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Sign Up</Link>
+          </>
+        )}
         <Link href="/fan-dashboard" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Fan Dashboard</Link>
         <Link href="/celeb-dashboard" className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800">Celebrity Dashboard</Link>
       </nav>
@@ -146,6 +164,12 @@ export default function Home() {
           </div>
         )}
       </div>
+      <Link
+        href={loggedIn ? "/celebrity/celebrity-signup" : "/auth/login"}
+        className="mt-4 bg-green-600 text-white rounded px-4 py-2 hover:bg-green-500"
+      >
+        + Add a Celebrity
+      </Link>
     </main>
   );
 }

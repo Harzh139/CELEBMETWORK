@@ -1,13 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function SignupPage() {
   const [form, setForm] = useState({ email: '', password: '', name: '', role: 'fan' });
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem('token'));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,20 +54,29 @@ export default function SignupPage() {
           value={form.password}
           onChange={e => setForm({ ...form, password: e.target.value })}
         />
-        <select
+        {/*<select
           className="w-full p-2 rounded bg-gray-800 text-white"
           value={form.role}
           onChange={e => setForm({ ...form, role: e.target.value })}
         >
           <option value="fan">Fan</option>
           <option value="celebrity">Celebrity</option>
-        </select>
+        </select>*/}
         <button type="submit" className="bg-yellow-400 text-black px-4 py-2 rounded w-full">Sign Up</button>
         {error && <div className="text-red-400">{error}</div>}
         <div className="text-center mt-4">
           <Link href="/auth/login" className="underline text-blue-400">Already have an account? Log In</Link>
         </div>
       </form>
+      <nav>
+        {!loggedIn && (
+          <>
+            <Link href="/auth/login" className="underline text-blue-400">Login</Link>
+            <Link href="/auth/signup" className="underline text-blue-400">Sign Up</Link>
+          </>
+        )}
+        {/* Other nav items */}
+      </nav>
     </main>
   );
 }
