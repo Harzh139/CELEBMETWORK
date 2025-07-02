@@ -5,9 +5,9 @@ services:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: celebnetwork
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-celebnetwork}
     ports:
       - "5432:5432"
     volumes:
@@ -20,17 +20,17 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: celebnetwork
-      JWT_SECRET: your_jwt_secret
-      GROQ_API_KEY: your_groq_api_key
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-celebnetwork}
+      JWT_SECRET: ${JWT_SECRET}
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      GOOGLE_CX: ${GOOGLE_CX}
     depends_on:
       - db
     ports:
       - "3000:3000"
-    volumes:
-      - ./backend:/app
     command: npm run start:prod
 
   frontend:
@@ -43,8 +43,6 @@ services:
       - backend
     ports:
       - "3001:3000"
-    volumes:
-      - ./frontend:/app
     command: npm run build && npm run start
 
 volumes:
