@@ -1,34 +1,51 @@
 # CelebNetwork
 
-A full-stack application for celebrity discovery and recommendations, powered by NestJS (backend), Next.js (frontend), PostgreSQL, and AI (GROQ/OpenAI).
+A modern web app for discovering, following, and recommending celebrities.  
+**Frontend:** Next.js (Vercel)  
+**Backend:** NestJS (Render)  
+**Database:** PostgreSQL  
+**AI:** GROQ/OpenAI for recommendations  
+**Image Search:** Google Custom Search API
 
 ---
 
-## Features
+## 🚀 Features
 
-- User authentication (fan/celebrity roles)
-- Celebrity search and recommendations (AI-powered)
-- Celebrity info and stats
-- Modern frontend with Next.js
-- Celebrity images fetched automatically from Google Custom Search API (no uploads required)
-- Fallback avatar for missing/broken images
-
----
-
-## Prerequisites
-
-- [Docker](https://www.docker.com/get-started) & [Docker Compose](https://docs.docker.com/compose/)
-- GROQ/OpenAI API key (for AI-powered features)
-- Google Custom Search API key and CX ID (for celebrity images)
+- Sign up & Login as a fan (regular user)
+- AI-powered celebrity suggestions
+- Follow/unfollow your favorite celebrities
+- Download celebrity profiles as PDF
+- Modern, mobile-friendly UI
+- Automatic celebrity images (with fallback avatar)
+- Secure: Only logged-in users can add celebrities or follow/unfollow
 
 ---
 
-## Getting Started
+## 🖥️ Live Demo
+
+- **Frontend (Vercel):** [your-frontend-url.vercel.app](https://celebmetwork-harzh139s-projects.vercel.app/)
+- **Backend (Render):** [https://celebmetwork-8.onrender.com](https://celebmetwork-8.onrender.com)
+
+---
+
+## 📝 How to Use (For Non-Programmers)
+
+1. **Visit the website** (see "Live Demo" above).
+2. **Sign up** as a fan (regular user).
+3. **Log in** with your email and password.
+4. **Browse celebrities** or use the AI recommender to discover new ones.
+5. **Follow** celebrities you like.
+6. **Download their profile as a PDF** if you want.
+7. **Add a new celebrity** (if you’re logged in as a fan).
+
+---
+
+## 🛠️ Local Setup (For Developers)
 
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/celebnetwork-app.git
+git clone https://github.com/Harzh139/CELEBMETWORK
 cd celebnetwork-app
 ```
 
