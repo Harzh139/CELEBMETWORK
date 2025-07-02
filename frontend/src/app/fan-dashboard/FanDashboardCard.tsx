@@ -1,10 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { FaInstagram, FaYoutube } from 'react-icons/fa';
 
-export default function FanDashboardCard({ celeb, onUnfollow }: { celeb: any, onUnfollow: (id: number) => void }) {
-  const [imgSrc, setImgSrc] = useState(celeb.thumbnail || celeb.image || '/default-avatar.png');
+export default function FanDashboardCard({
+  celeb,
+  onUnfollow,
+}: {
+  celeb: any;
+  onUnfollow: (id: number) => void;
+}) {
+  const [imgSrc, setImgSrc] = useState(
+    celeb.thumbnail || celeb.image || '/default-avatar.png'
+  );
 
   return (
     <div className="bg-white text-black rounded-lg shadow p-6 flex flex-col items-center space-y-3">
@@ -17,19 +24,35 @@ export default function FanDashboardCard({ celeb, onUnfollow }: { celeb: any, on
 
       <h2 className="text-xl font-bold text-center">{celeb.name}</h2>
 
-      <p><span className="font-semibold">Category:</span> {celeb.genre}</p>
-      <p><span className="font-semibold">Fanbase:</span> {celeb.fanbase}</p>
-      <p><span className="font-semibold">Location:</span> {celeb.country}</p>
+      <p>
+        <span className="font-semibold">Category:</span> {celeb.genre}
+      </p>
+      <p>
+        <span className="font-semibold">Fanbase:</span> {celeb.fanbase}
+      </p>
+      <p>
+        <span className="font-semibold">Location:</span> {celeb.country}
+      </p>
 
-      <div className="flex gap-4 mt-2">
+      <div className="flex flex-col gap-2 mt-2 text-center">
         {celeb.instagram && (
-          <a href={celeb.instagram} target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition-transform" />
+          <a
+            href={celeb.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            View Instagram Profile
           </a>
         )}
         {celeb.youtube && (
-          <a href={celeb.youtube} target="_blank" rel="noopener noreferrer">
-            <FaYoutube className="text-red-600 text-2xl hover:scale-110 transition-transform" />
+          <a
+            href={celeb.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-red-600 underline hover:text-red-800"
+          >
+            Visit YouTube Channel
           </a>
         )}
       </div>
