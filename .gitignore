@@ -1,0 +1,15 @@
+# .gitignore
+.env
+.env.local
+*.env
+backend/.env
+frontend/.env
+frontend/.env.local
+node_modules/
+dist/
+.next/
+out/
+coverage/
+db_data/
+.DS_Store
+*.log
